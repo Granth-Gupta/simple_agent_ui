@@ -1,0 +1,45 @@
+2025-06-30 02:04:05,040 - INFO - Model initialized successfully
+2025-06-30 02:04:05,169 - INFO - MCP client initialized successfully
+2025-06-30 02:04:05,173 - INFO - Starting cleanup process...
+2025-06-30 02:04:05,173 - INFO - Session closed
+2025-06-30 02:04:05,174 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-6' coro=<<async_generator_athrow without __name__>()> exception=RuntimeError('Attempted to exit cancel scope in a different task than it was entered in')>
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\Users\Granth Gupta\Desktop\AI Agents\SimpleAgent\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 772, in __aexit__
+  |     raise BaseExceptionGroup(
+  | BaseExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "C:\Users\Granth Gupta\Desktop\AI Agents\SimpleAgent\.venv\Lib\site-packages\mcp\client\stdio\__init__.py", line 179, in stdio_client
+    |     yield read_stream, write_stream
+    | GeneratorExit
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Granth Gupta\Desktop\AI Agents\SimpleAgent\.venv\Lib\site-packages\mcp\client\stdio\__init__.py", line 173, in stdio_client
+    anyio.create_task_group() as tg,
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Granth Gupta\Desktop\AI Agents\SimpleAgent\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 778, in __aexit__
+    if self.cancel_scope.__exit__(type(exc), exc, exc.__traceback__):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Granth Gupta\Desktop\AI Agents\SimpleAgent\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 457, in __exit__
+    raise RuntimeError(
+RuntimeError: Attempted to exit cancel scope in a different task than it was entered in
+2025-06-30 02:06:32,100 - INFO - Model initialized successfully
+2025-06-30 02:06:32,229 - INFO - MCP client initialized successfully
+2025-06-30 02:06:33,293 - INFO - MCP session initialized successfully
+2025-06-30 02:06:33,296 - INFO - Loaded 8 tools successfully
+2025-06-30 02:06:33,308 - INFO - Agent created successfully
+2025-06-30 02:06:43,439 - INFO - Starting cleanup process...
+2025-06-30 02:06:43,440 - INFO - Session closed
+2025-06-30 02:06:45,430 - INFO - MCP client connections closed
+2025-06-30 02:07:52,923 - INFO - Model initialized successfully
+2025-06-30 02:07:53,053 - INFO - MCP client initialized successfully
+2025-06-30 02:07:54,062 - INFO - MCP session initialized successfully
+2025-06-30 02:07:54,066 - INFO - Loaded 8 tools successfully
+2025-06-30 02:07:54,075 - INFO - Agent created successfully
+2025-06-30 02:08:01,906 - INFO - Starting cleanup process...
+2025-06-30 02:08:01,907 - INFO - Session closed
+2025-06-30 02:08:03,909 - INFO - MCP client connections closed
