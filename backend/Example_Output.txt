@@ -1,0 +1,21 @@
+Available Tools - firecrawl_scrape firecrawl_map firecrawl_crawl firecrawl_check_crawl_status firecrawl_search firecrawl_extract firecrawl_deep_research firecrawl_generate_llmstxt
+------------------------------------------------------------
+
+You: Find best apple headphone using firecrawl tools
+
+--- LLM USED A TOOL! ---
+  Tool Name: {'name': 'firecrawl_search', 'args': {'country': 'us', 'lang': 'en', 'limit': 5.0, 'query': 'best apple headphone', 'scrapeOptions': {'formats': ['markdown'], 'onlyMainContent': True}}, 'id': '60b64ba6-7bb3-4255-a9fa-c262a0d79811', 'type': 'tool_call'}
+------------------------
+
+--- TOOL OUTPUT (firecrawl_search): ---
+URL: https://www.rtings.com/headphones/reviews/apple
+Title: The 4 Best Apple Headphones of 2025: Rev
+---------------------------
+
+Agent: Based on the search results, here are a few of the top-rated Apple headphones:
+
+*   **Apple AirPods Pro (2nd generation):** These are the top-rated Apple earbuds overall, with excellent noise cancellation and a warm sound profile.
+*   **Apple AirPods 4 with Active Noise Cancellation:** These are a good option if you prefer an open-back design with active noise cancellation.
+*   **Apple AirPods Max:** These over-ear headphones offer excellent noise cancellation and a premium build quality.
+
+The search results also provide links to detailed reviews and comparisons, which can help you make an informed decision based on your specific needs and preferences.
