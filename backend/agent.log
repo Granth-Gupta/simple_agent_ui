@@ -200,3 +200,24 @@ RuntimeError: Attempted to exit cancel scope in a different task than it was ent
 2025-06-30 03:10:01,251 - INFO - Starting cleanup process...
 2025-06-30 03:10:01,253 - WARNING - Error closing session: Attempted to exit cancel scope in a different task than it was entered in
 2025-06-30 03:10:01,292 - WARNING - Error closing MCP client: Attempted to exit cancel scope in a different task than it was entered in
+2025-06-30 03:14:46,836 - INFO - Model initialized successfully
+2025-06-30 03:14:46,971 - INFO - MCP client initialized successfully
+2025-06-30 03:14:48,412 - INFO - MCP session initialized successfully
+2025-06-30 03:14:48,418 - INFO - Loaded 8 tools successfully
+2025-06-30 03:14:48,434 - INFO - Agent created successfully
+2025-06-30 03:14:48,435 - INFO - Agent initialized successfully for web server
+2025-06-30 03:14:48,843 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.65:5000
+2025-06-30 03:14:48,844 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-30 03:15:08,237 - INFO - 127.0.0.1 - - [30/Jun/2025 03:15:08] "OPTIONS /tools HTTP/1.1" 200 -
+2025-06-30 03:15:08,237 - INFO - 127.0.0.1 - - [30/Jun/2025 03:15:08] "OPTIONS /tools HTTP/1.1" 200 -
+2025-06-30 03:15:08,496 - INFO - 127.0.0.1 - - [30/Jun/2025 03:15:08] "GET /tools HTTP/1.1" 200 -
+2025-06-30 03:15:08,548 - INFO - 127.0.0.1 - - [30/Jun/2025 03:15:08] "GET /tools HTTP/1.1" 200 -
+2025-06-30 03:15:09,159 - INFO - 127.0.0.1 - - [30/Jun/2025 03:15:09] "GET /tools HTTP/1.1" 200 -
+2025-06-30 03:15:09,476 - INFO - 127.0.0.1 - - [30/Jun/2025 03:15:09] "GET /tools HTTP/1.1" 200 -
+2025-06-30 03:15:31,365 - INFO - 127.0.0.1 - - [30/Jun/2025 03:15:31] "OPTIONS /chat HTTP/1.1" 200 -
+2025-06-30 03:15:35,935 - INFO - Tool used: firecrawl_search
+2025-06-30 03:15:35,935 - INFO - Tool output from firecrawl_search: 1389 characters
+2025-06-30 03:15:35,937 - INFO - 127.0.0.1 - - [30/Jun/2025 03:15:35] "POST /chat HTTP/1.1" 200 -
