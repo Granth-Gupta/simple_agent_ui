@@ -10,6 +10,7 @@ import {
   Database,
   Brain,
   Zap,
+  AlertCircle,
 } from "lucide-react";
 // Import Card components from shadcn/ui
 import {
@@ -33,19 +34,125 @@ function LandingPage({ onNavigate }) {
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [availableTools] = useState([
-    "firecrawl_scrape",
-    "firecrawl_map",
-    "firecrawl_crawl",
-    "firecrawl_check_crawl_status",
-    "firecrawl_search",
-    "firecrawl_extract",
-    "firecrawl_deep_research",
-    "firecrawl_generate_llmstxt",
-  ]);
+  const [availableTools, setAvailableTools] = useState([]);
+  const [toolsLoading, setToolsLoading] = useState(true);
+  const [toolsError, setToolsError] = useState(null);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+
+  // Function to format AI responses for better readability
+  const formatAIResponse = (content) => {
+    // If content is already well-formatted (contains bullet points, line breaks, etc.), return as is
+    if (
+      content.includes("•") ||
+      content.includes("**") ||
+      content.includes("\n\n")
+    ) {
+      return content;
+    }
+
+    // For lengthy paragraphs, try to break them up
+    const sentences = content
+      .split(/[.!?]+/)
+      .filter((s) => s.trim().length > 0);
+
+    // If it's a long paragraph with multiple sentences, format it better
+    if (sentences.length > 3 && content.length > 300) {
+      // Look for patterns that suggest lists or multiple items
+      const listPatterns = [
+        /\*\*([^*]+)\*\*/g, // Bold items
+        /(\w+\.com|\w+\.org|\w+\.ai)/g, // Website mentions
+        /([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s*[:–-]/g, // Title patterns
+      ];
+
+      let formatted = content;
+
+      // Try to identify and format website/platform mentions
+      const websiteMatches = content.match(
+        /(\w+\.com|\w+\.org|\w+\.ai|\w+Face|\w+Net|[A-Z][a-z]+[A-Z][a-z]+)/g
+      );
+      if (websiteMatches && websiteMatches.length > 2) {
+        // This looks like a list of platforms/websites
+        let formattedContent = "I found several great options:\n\n";
+
+        websiteMatches.forEach((site, index) => {
+          // Extract the sentence or context around this site
+          const siteRegex = new RegExp(
+            `([^.]*${site.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[^.]*\\.?)`,
+            "i"
+          );
+          const match = content.match(siteRegex);
+          if (match) {
+            formattedContent += `• **${site}** - ${match[1]
+              .replace(site, "")
+              .trim()}\n`;
+          }
+        });
+
+        formattedContent +=
+          "\nWould you like me to provide more details about any of these options?";
+        return formattedContent;
+      }
+
+      // If no specific patterns found, just break into shorter paragraphs
+      const midPoint = Math.floor(sentences.length / 2);
+      const firstHalf = sentences.slice(0, midPoint).join(". ") + ".";
+      const secondHalf = sentences.slice(midPoint).join(". ") + ".";
+
+      return `${firstHalf}\n\n${secondHalf}`;
+    }
+
+    return content;
+  };
+
+  // Fetch available tools from the backend
+  const fetchAvailableTools = async () => {
+    try {
+      setToolsLoading(true);
+      setToolsError(null);
+
+      const response = await fetch("http://localhost:5000/tools", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.tools && Array.isArray(data.tools)) {
+        setAvailableTools(data.tools);
+      } else {
+        throw new Error("Invalid tools data format");
+      }
+    } catch (error) {
+      console.error("Error fetching available tools:", error);
+      setToolsError(error.message);
+      // Fallback to hardcoded tools if fetch fails
+      setAvailableTools([
+        "firecrawl_scrape",
+        "firecrawl_map",
+        "firecrawl_crawl",
+        "firecrawl_check_crawl_status",
+        "firecrawl_search",
+        "firecrawl_extract",
+        "firecrawl_deep_research",
+        "firecrawl_generate_llmstxt",
+      ]);
+    } finally {
+      setToolsLoading(false);
+    }
+  };
+
+  // Fetch tools on component mount
+  useEffect(() => {
+    fetchAvailableTools();
+  }, []);
 
   // Scrolls to the bottom of the messages container
   const scrollToBottom = () => {
@@ -117,10 +224,13 @@ function LandingPage({ onNavigate }) {
         // but you could iterate and add them if needed.
       }
 
+      // Format the AI response for better readability
+      const formattedContent = formatAIResponse(botMessageContent);
+
       const botResponse = {
         id: Date.now() + 1,
         type: "bot",
-        content: botMessageContent,
+        content: formattedContent,
         timestamp: new Date().toLocaleTimeString(),
         toolsUsed: toolsUsedByBot,
       };
@@ -133,7 +243,7 @@ function LandingPage({ onNavigate }) {
         {
           id: Date.now() + 1,
           type: "bot",
-          content: `Sorry, there was an error processing your request: ${error.message}`,
+          content: `⚠️ **Connection Error**\n\nSorry, I couldn't process your request:\n• ${error.message}\n• Please check your connection\n• Try again in a moment`,
           timestamp: new Date().toLocaleTimeString(),
         },
       ]);
@@ -141,10 +251,6 @@ function LandingPage({ onNavigate }) {
       setIsLoading(false);
     }
   };
-
-  // No longer needed as we get real responses from the agent
-  // const generateMockResponse = (query) => { /* ... */ };
-  // const getRandomTools = () => { /* ... */ };
 
   // Returns the appropriate Lucide icon for a given tool
   const getToolIcon = (tool) => {
@@ -155,10 +261,137 @@ function LandingPage({ onNavigate }) {
     return <Zap className="w-3 h-3" />;
   };
 
+  // Component to render formatted message content
+  const MessageContent = ({ content }) => {
+    // Split content by line breaks and render with proper formatting
+    const lines = content.split("\n");
+
+    return (
+      <div className="space-y-2">
+        {lines.map((line, index) => {
+          // Skip empty lines
+          if (!line.trim()) return <div key={index} className="h-2" />;
+
+          // Handle bullet points
+          if (line.trim().startsWith("•")) {
+            return (
+              <div key={index} className="flex items-start gap-2">
+                <span className="text-blue-500 font-bold">•</span>
+                <span
+                  className="flex-1"
+                  dangerouslySetInnerHTML={{
+                    __html: line
+                      .replace("•", "")
+                      .trim()
+                      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>"),
+                  }}
+                />
+              </div>
+            );
+          }
+
+          // Handle bold headings
+          if (line.includes("**") && line.trim().endsWith("**")) {
+            return (
+              <div
+                key={index}
+                className="font-bold text-lg mt-3 mb-1"
+                dangerouslySetInnerHTML={{
+                  __html: line.replace(/\*\*(.*?)\*\*/g, "$1"),
+                }}
+              />
+            );
+          }
+
+          // Regular line with bold formatting
+          return (
+            <p
+              key={index}
+              className="leading-relaxed"
+              dangerouslySetInnerHTML={{
+                __html: line.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>"),
+              }}
+            />
+          );
+        })}
+      </div>
+    );
+  };
+
+  // Render tools section with loading and error states
+  const renderToolsSection = () => {
+    if (toolsLoading) {
+      return (
+        <div className="bg-black/20 backdrop-blur-lg border-b border-purple-500/10 p-3">
+          <p className="text-sm text-purple-300 mb-2">
+            Loading Available Tools...
+          </p>
+          <div className="flex items-center gap-2">
+            <Loader className="w-4 h-4 animate-spin text-purple-400" />
+            <span className="text-xs text-purple-400">
+              Fetching tools from backend...
+            </span>
+          </div>
+        </div>
+      );
+    }
+
+    if (toolsError) {
+      return (
+        <div className="bg-black/20 backdrop-blur-lg border-b border-purple-500/10 p-3">
+          <p className="text-sm text-purple-300 mb-2">Available Tools:</p>
+          <div className="flex items-center gap-2 mb-2">
+            <AlertCircle className="w-4 h-4 text-amber-400" />
+            <span className="text-xs text-amber-400">
+              Failed to fetch tools from backend (using fallback)
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {availableTools.map((tool, index) => (
+              <span
+                key={index}
+                className="px-2 py-1 bg-amber-500/20 text-amber-200 rounded text-xs font-mono flex items-center gap-1"
+              >
+                {getToolIcon(tool)}
+                {tool}
+              </span>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="bg-black/20 backdrop-blur-lg border-b border-purple-500/10 p-3">
+        <div className="flex items-center gap-2 mb-2">
+          <p className="text-sm text-purple-300">Available Tools:</p>
+          <button
+            onClick={fetchAvailableTools}
+            className="text-xs text-purple-400 hover:text-purple-300 transition-colors"
+            title="Refresh tools"
+          >
+            🔄
+          </button>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {availableTools.map((tool, index) => (
+            <span
+              key={index}
+              className="px-2 py-1 bg-purple-500/20 text-purple-200 rounded text-xs font-mono flex items-center gap-1"
+            >
+              {getToolIcon(tool)}
+              {tool}
+            </span>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4 font-sans">
       {/* Main Chat Container Card */}
-      <Card className="w-full max-w-3xl h-[90vh] flex flex-col rounded-xl overflow-hidden bg-black/40 backdrop-blur-xl border border-purple-500/20 shadow-lg shadow-purple-900/50">
+      <Card className="w-[80%] max-w-6xl h-[90vh] flex flex-col rounded-xl overflow-hidden bg-black/40 backdrop-blur-xl border border-purple-500/20 shadow-lg shadow-purple-900/50">
         {/* Header - Now part of the main Card */}
         <CardHeader className="bg-black/30 border-b border-purple-500/20 p-4 flex flex-row items-center justify-between">
           <div className="flex items-center gap-3">
@@ -179,21 +412,8 @@ function LandingPage({ onNavigate }) {
           </div>
         </CardHeader>
 
-        {/* Available Tools - Also inside the main Card, but visually separate */}
-        <div className="bg-black/20 backdrop-blur-lg border-b border-purple-500/10 p-3">
-          <p className="text-sm text-purple-300 mb-2">Available Tools:</p>
-          <div className="flex flex-wrap gap-2">
-            {availableTools.map((tool, index) => (
-              <span
-                key={index}
-                className="px-2 py-1 bg-purple-500/20 text-purple-200 rounded text-xs font-mono flex items-center gap-1"
-              >
-                {getToolIcon(tool)}
-                {tool}
-              </span>
-            ))}
-          </div>
-        </div>
+        {/* Available Tools - Dynamic loading */}
+        {renderToolsSection()}
 
         {/* Messages */}
         <CardContent className="flex-1 overflow-y-auto p-4 space-y-6">
@@ -235,23 +455,27 @@ function LandingPage({ onNavigate }) {
                   )}
                 >
                   <CardContent className="p-4">
-                    <p className="text-sm leading-relaxed m-0">
-                      {message.content}
-                    </p>
+                    {message.type === "bot" ? (
+                      <MessageContent content={message.content} />
+                    ) : (
+                      <p className="text-sm leading-relaxed m-0">
+                        {message.content}
+                      </p>
+                    )}
 
                     {message.toolsUsed && message.toolsUsed.length > 0 && (
                       <div className="mt-3 pt-3 border-t border-purple-500/20">
-                        <p className="text-xs text-purple-300 mb-2">
+                        <p className="text-xs text-gray-800 dark:text-gray-200 font-semibold mb-2">
                           Tools Used:
                         </p>
-                        <div className="flex flex-wrap gap-1">
+                        <div className="flex flex-wrap gap-2">
                           {message.toolsUsed.map((tool, index) => (
                             <span
                               key={index}
-                              className="px-1.5 py-0.5 bg-purple-500/30 text-purple-200 rounded text-xs font-mono flex items-center gap-1"
+                              className="px-2 py-1 bg-gradient-to-r from-emerald-500/90 to-teal-500/90 text-white rounded-md text-xs font-mono flex items-center gap-1 shadow-sm border border-emerald-400/30"
                             >
                               {getToolIcon(tool)}
-                              {tool}
+                              <span className="font-medium">{tool}</span>
                             </span>
                           ))}
                         </div>

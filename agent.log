@@ -43,3 +43,160 @@ RuntimeError: Attempted to exit cancel scope in a different task than it was ent
 2025-06-30 02:08:01,906 - INFO - Starting cleanup process...
 2025-06-30 02:08:01,907 - INFO - Session closed
 2025-06-30 02:08:03,909 - INFO - MCP client connections closed
+2025-06-30 02:31:10,611 - INFO - Model initialized successfully
+2025-06-30 02:31:10,748 - INFO - MCP client initialized successfully
+2025-06-30 02:31:11,722 - INFO - MCP session initialized successfully
+2025-06-30 02:31:11,725 - INFO - Loaded 8 tools successfully
+2025-06-30 02:31:11,737 - INFO - Agent created successfully
+2025-06-30 02:31:11,738 - INFO - Agent initialized successfully for web server
+2025-06-30 02:31:12,609 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.65:5000
+2025-06-30 02:31:12,609 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-30 02:31:31,157 - INFO - 127.0.0.1 - - [30/Jun/2025 02:31:31] "[33mGET / HTTP/1.1[0m" 404 -
+2025-06-30 02:31:31,225 - INFO - 127.0.0.1 - - [30/Jun/2025 02:31:31] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-06-30 02:31:50,405 - INFO - 127.0.0.1 - - [30/Jun/2025 02:31:50] "OPTIONS /chat HTTP/1.1" 200 -
+2025-06-30 02:31:53,492 - INFO - 127.0.0.1 - - [30/Jun/2025 02:31:53] "POST /chat HTTP/1.1" 200 -
+2025-06-30 02:32:39,870 - INFO - 127.0.0.1 - - [30/Jun/2025 02:32:39] "OPTIONS /chat HTTP/1.1" 200 -
+2025-06-30 02:32:43,686 - INFO - Tool used: firecrawl_search
+2025-06-30 02:32:43,686 - INFO - Tool output from firecrawl_search: 1484 characters
+2025-06-30 02:32:43,687 - INFO - 127.0.0.1 - - [30/Jun/2025 02:32:43] "POST /chat HTTP/1.1" 200 -
+2025-06-30 02:40:59,674 - INFO - 127.0.0.1 - - [30/Jun/2025 02:40:59] "OPTIONS /tools HTTP/1.1" 200 -
+2025-06-30 02:40:59,936 - INFO - 127.0.0.1 - - [30/Jun/2025 02:40:59] "GET /tools HTTP/1.1" 200 -
+2025-06-30 02:41:10,259 - INFO - 127.0.0.1 - - [30/Jun/2025 02:41:10] "OPTIONS /tools HTTP/1.1" 200 -
+2025-06-30 02:41:10,575 - INFO - 127.0.0.1 - - [30/Jun/2025 02:41:10] "GET /tools HTTP/1.1" 200 -
+2025-06-30 02:41:10,844 - INFO - 127.0.0.1 - - [30/Jun/2025 02:41:10] "GET /tools HTTP/1.1" 200 -
+2025-06-30 02:41:12,851 - INFO - 127.0.0.1 - - [30/Jun/2025 02:41:12] "GET /tools HTTP/1.1" 200 -
+2025-06-30 02:41:13,157 - INFO - 127.0.0.1 - - [30/Jun/2025 02:41:13] "GET /tools HTTP/1.1" 200 -
+2025-06-30 02:41:21,326 - INFO - 127.0.0.1 - - [30/Jun/2025 02:41:21] "OPTIONS /tools HTTP/1.1" 200 -
+2025-06-30 02:41:21,646 - INFO - 127.0.0.1 - - [30/Jun/2025 02:41:21] "GET /tools HTTP/1.1" 200 -
+2025-06-30 02:41:22,804 - INFO - 127.0.0.1 - - [30/Jun/2025 02:41:22] "GET /tools HTTP/1.1" 200 -
+2025-06-30 02:41:23,930 - INFO - 127.0.0.1 - - [30/Jun/2025 02:41:23] "GET /tools HTTP/1.1" 200 -
+2025-06-30 02:42:22,796 - INFO - 127.0.0.1 - - [30/Jun/2025 02:42:22] "OPTIONS /chat HTTP/1.1" 200 -
+2025-06-30 02:42:28,927 - INFO - Tool used: firecrawl_search
+2025-06-30 02:42:28,927 - INFO - Tool output from firecrawl_search: 1425 characters
+2025-06-30 02:42:28,928 - INFO - 127.0.0.1 - - [30/Jun/2025 02:42:28] "POST /chat HTTP/1.1" 200 -
+2025-06-30 02:47:05,079 - INFO - 127.0.0.1 - - [30/Jun/2025 02:47:05] "OPTIONS /tools HTTP/1.1" 200 -
+2025-06-30 02:47:05,081 - INFO - 127.0.0.1 - - [30/Jun/2025 02:47:05] "OPTIONS /tools HTTP/1.1" 200 -
+2025-06-30 02:47:05,329 - INFO - 127.0.0.1 - - [30/Jun/2025 02:47:05] "GET /tools HTTP/1.1" 200 -
+2025-06-30 02:47:05,390 - INFO - 127.0.0.1 - - [30/Jun/2025 02:47:05] "GET /tools HTTP/1.1" 200 -
+2025-06-30 02:47:07,749 - INFO - 127.0.0.1 - - [30/Jun/2025 02:47:07] "OPTIONS /chat HTTP/1.1" 200 -
+2025-06-30 02:47:12,676 - INFO - Tool used: firecrawl_search
+2025-06-30 02:47:12,677 - INFO - Tool output from firecrawl_search: 1425 characters
+2025-06-30 02:47:12,679 - INFO - 127.0.0.1 - - [30/Jun/2025 02:47:12] "POST /chat HTTP/1.1" 200 -
+2025-06-30 02:47:34,915 - INFO - Starting cleanup process...
+2025-06-30 02:47:34,916 - WARNING - Error closing session: Attempted to exit cancel scope in a different task than it was entered in
+2025-06-30 02:47:34,951 - WARNING - Error closing MCP client: Attempted to exit cancel scope in a different task than it was entered in
+2025-06-30 02:47:42,827 - INFO - Model initialized successfully
+2025-06-30 02:47:42,985 - INFO - MCP client initialized successfully
+2025-06-30 02:47:44,423 - INFO - MCP session initialized successfully
+2025-06-30 02:47:44,433 - INFO - Loaded 8 tools successfully
+2025-06-30 02:47:44,458 - INFO - Agent created successfully
+2025-06-30 02:47:44,458 - INFO - Agent initialized successfully for web server
+2025-06-30 02:47:44,819 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.65:5000
+2025-06-30 02:47:44,820 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-30 02:47:50,790 - INFO - 127.0.0.1 - - [30/Jun/2025 02:47:50] "OPTIONS /tools HTTP/1.1" 200 -
+2025-06-30 02:47:50,792 - INFO - 127.0.0.1 - - [30/Jun/2025 02:47:50] "OPTIONS /tools HTTP/1.1" 200 -
+2025-06-30 02:47:51,053 - INFO - 127.0.0.1 - - [30/Jun/2025 02:47:51] "GET /tools HTTP/1.1" 200 -
+2025-06-30 02:47:51,099 - INFO - 127.0.0.1 - - [30/Jun/2025 02:47:51] "GET /tools HTTP/1.1" 200 -
+2025-06-30 02:47:53,930 - INFO - 127.0.0.1 - - [30/Jun/2025 02:47:53] "OPTIONS /chat HTTP/1.1" 200 -
+2025-06-30 02:47:59,762 - INFO - Tool used: firecrawl_search
+2025-06-30 02:47:59,762 - INFO - Tool output from firecrawl_search: 1425 characters
+2025-06-30 02:47:59,764 - INFO - 127.0.0.1 - - [30/Jun/2025 02:47:59] "POST /chat HTTP/1.1" 200 -
+2025-06-30 02:49:39,248 - INFO - Starting cleanup process...
+2025-06-30 02:49:39,249 - WARNING - Error closing session: Attempted to exit cancel scope in a different task than it was entered in
+2025-06-30 02:49:39,283 - WARNING - Error closing MCP client: Attempted to exit cancel scope in a different task than it was entered in
+2025-06-30 02:49:45,890 - INFO - Model initialized successfully
+2025-06-30 02:49:46,041 - INFO - MCP client initialized successfully
+2025-06-30 02:49:47,887 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.65:5000
+2025-06-30 02:49:47,889 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-30 02:49:48,068 - INFO - MCP session initialized successfully
+2025-06-30 02:49:48,073 - INFO - Loaded 8 tools successfully
+2025-06-30 02:49:48,094 - INFO - Agent created successfully
+2025-06-30 02:49:48,094 - INFO - Agent initialized successfully for web server
+2025-06-30 02:49:59,444 - INFO - 127.0.0.1 - - [30/Jun/2025 02:49:59] "OPTIONS /chat HTTP/1.1" 200 -
+2025-06-30 02:50:02,078 - INFO - 127.0.0.1 - - [30/Jun/2025 02:50:02] "POST /chat HTTP/1.1" 200 -
+2025-06-30 02:50:16,384 - INFO - 127.0.0.1 - - [30/Jun/2025 02:50:16] "OPTIONS /chat HTTP/1.1" 200 -
+2025-06-30 02:50:17,814 - INFO - 127.0.0.1 - - [30/Jun/2025 02:50:17] "POST /chat HTTP/1.1" 200 -
+2025-06-30 02:50:46,087 - INFO - Starting cleanup process...
+2025-06-30 02:50:46,088 - WARNING - Error closing session: Attempted to exit cancel scope in a different task than it was entered in
+2025-06-30 02:50:46,132 - WARNING - Error closing MCP client: Attempted to exit cancel scope in a different task than it was entered in
+2025-06-30 02:50:51,443 - INFO - Model initialized successfully
+2025-06-30 02:50:51,582 - INFO - MCP client initialized successfully
+2025-06-30 02:50:52,816 - INFO - MCP session initialized successfully
+2025-06-30 02:50:52,822 - INFO - Loaded 8 tools successfully
+2025-06-30 02:50:52,837 - INFO - Agent created successfully
+2025-06-30 02:50:52,838 - INFO - Agent initialized successfully for web server
+2025-06-30 02:50:53,465 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.65:5000
+2025-06-30 02:50:53,465 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-30 02:51:00,220 - INFO - 127.0.0.1 - - [30/Jun/2025 02:51:00] "OPTIONS /tools HTTP/1.1" 200 -
+2025-06-30 02:51:00,224 - INFO - 127.0.0.1 - - [30/Jun/2025 02:51:00] "OPTIONS /tools HTTP/1.1" 200 -
+2025-06-30 02:51:00,480 - INFO - 127.0.0.1 - - [30/Jun/2025 02:51:00] "GET /tools HTTP/1.1" 200 -
+2025-06-30 02:51:00,539 - INFO - 127.0.0.1 - - [30/Jun/2025 02:51:00] "GET /tools HTTP/1.1" 200 -
+2025-06-30 02:51:03,040 - INFO - 127.0.0.1 - - [30/Jun/2025 02:51:03] "OPTIONS /chat HTTP/1.1" 200 -
+2025-06-30 02:51:08,925 - INFO - Tool used: firecrawl_search
+2025-06-30 02:51:08,926 - INFO - Tool output from firecrawl_search: 1425 characters
+2025-06-30 02:51:08,927 - INFO - 127.0.0.1 - - [30/Jun/2025 02:51:08] "POST /chat HTTP/1.1" 200 -
+2025-06-30 02:55:03,580 - INFO - Starting cleanup process...
+2025-06-30 02:55:03,581 - WARNING - Error closing session: Attempted to exit cancel scope in a different task than it was entered in
+2025-06-30 02:55:03,621 - WARNING - Error closing MCP client: Attempted to exit cancel scope in a different task than it was entered in
+2025-06-30 02:55:11,967 - INFO - Model initialized successfully
+2025-06-30 02:55:12,112 - INFO - MCP client initialized successfully
+2025-06-30 02:55:13,324 - INFO - MCP session initialized successfully
+2025-06-30 02:55:13,330 - INFO - Loaded 8 tools successfully
+2025-06-30 02:55:13,340 - INFO - Agent created successfully
+2025-06-30 02:55:13,340 - INFO - Agent initialized successfully for web server
+2025-06-30 02:55:13,982 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.65:5000
+2025-06-30 02:55:13,983 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-30 02:55:24,321 - INFO - 127.0.0.1 - - [30/Jun/2025 02:55:24] "OPTIONS /tools HTTP/1.1" 200 -
+2025-06-30 02:55:24,322 - INFO - 127.0.0.1 - - [30/Jun/2025 02:55:24] "OPTIONS /tools HTTP/1.1" 200 -
+2025-06-30 02:55:24,581 - INFO - 127.0.0.1 - - [30/Jun/2025 02:55:24] "GET /tools HTTP/1.1" 200 -
+2025-06-30 02:55:24,644 - INFO - 127.0.0.1 - - [30/Jun/2025 02:55:24] "GET /tools HTTP/1.1" 200 -
+2025-06-30 02:55:26,642 - INFO - 127.0.0.1 - - [30/Jun/2025 02:55:26] "OPTIONS /chat HTTP/1.1" 200 -
+2025-06-30 02:55:49,034 - INFO - Tool used: firecrawl_search
+2025-06-30 02:55:49,035 - INFO - Tool output from firecrawl_search: 182387 characters
+2025-06-30 02:55:49,037 - INFO - 127.0.0.1 - - [30/Jun/2025 02:55:49] "POST /chat HTTP/1.1" 200 -
+2025-06-30 02:57:35,757 - INFO - 127.0.0.1 - - [30/Jun/2025 02:57:35] "[33mGET / HTTP/1.1[0m" 404 -
+2025-06-30 02:57:35,775 - INFO - 127.0.0.1 - - [30/Jun/2025 02:57:35] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-06-30 02:57:59,558 - INFO - 127.0.0.1 - - [30/Jun/2025 02:57:59] "[33mGET / HTTP/1.1[0m" 404 -
+2025-06-30 02:57:59,581 - INFO - 127.0.0.1 - - [30/Jun/2025 02:57:59] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-06-30 02:58:30,369 - INFO - 192.168.29.65 - - [30/Jun/2025 02:58:30] "[33mGET / HTTP/1.1[0m" 404 -
+2025-06-30 02:58:30,505 - INFO - 192.168.29.65 - - [30/Jun/2025 02:58:30] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-30 02:58:42,612 - INFO - 127.0.0.1 - - [30/Jun/2025 02:58:42] "[33mGET / HTTP/1.1[0m" 404 -
+2025-06-30 02:58:42,644 - INFO - 127.0.0.1 - - [30/Jun/2025 02:58:42] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-06-30 03:00:24,842 - INFO - Starting cleanup process...
+2025-06-30 03:00:24,843 - WARNING - Error closing session: Attempted to exit cancel scope in a different task than it was entered in
+2025-06-30 03:00:24,886 - WARNING - Error closing MCP client: Attempted to exit cancel scope in a different task than it was entered in
+2025-06-30 03:01:09,945 - INFO - Model initialized successfully
+2025-06-30 03:01:10,076 - INFO - MCP client initialized successfully
+2025-06-30 03:01:11,596 - INFO - MCP session initialized successfully
+2025-06-30 03:01:11,602 - INFO - Loaded 8 tools successfully
+2025-06-30 03:01:11,623 - INFO - Agent created successfully
+2025-06-30 03:01:11,624 - INFO - Agent initialized successfully for web server
+2025-06-30 03:01:11,955 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.65:5000
+2025-06-30 03:01:11,956 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-30 03:01:22,847 - INFO - 127.0.0.1 - - [30/Jun/2025 03:01:22] "[33mGET / HTTP/1.1[0m" 404 -
+2025-06-30 03:01:23,109 - INFO - 127.0.0.1 - - [30/Jun/2025 03:01:23] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-30 03:03:16,523 - INFO - 127.0.0.1 - - [30/Jun/2025 03:03:16] "OPTIONS /chat HTTP/1.1" 200 -
+2025-06-30 03:03:22,536 - INFO - Tool used: firecrawl_search
+2025-06-30 03:03:22,537 - INFO - Tool output from firecrawl_search: 1457 characters
+2025-06-30 03:03:22,538 - INFO - 127.0.0.1 - - [30/Jun/2025 03:03:22] "POST /chat HTTP/1.1" 200 -
+2025-06-30 03:10:01,251 - INFO - Starting cleanup process...
+2025-06-30 03:10:01,253 - WARNING - Error closing session: Attempted to exit cancel scope in a different task than it was entered in
+2025-06-30 03:10:01,292 - WARNING - Error closing MCP client: Attempted to exit cancel scope in a different task than it was entered in
