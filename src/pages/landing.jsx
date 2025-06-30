@@ -41,6 +41,21 @@ function LandingPage({ onNavigate }) {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
+  // Backend URL - automatically detects environment
+  const getBackendURL = () => {
+    // Check if we're in development (localhost)
+    if (
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1"
+    ) {
+      return "http://localhost:5000";
+    }
+    // Production backend URL
+    return "https://simple-agent-backend.onrender.com";
+  };
+
+  const BACKEND_URL = getBackendURL();
+
   // Function to format AI responses for better readability
   const formatAIResponse = (content) => {
     // If content is already well-formatted (contains bullet points, line breaks, etc.), return as is
@@ -112,11 +127,13 @@ function LandingPage({ onNavigate }) {
       setToolsLoading(true);
       setToolsError(null);
 
-      const response = await fetch("http://localhost:5000/tools", {
+      const response = await fetch(`${BACKEND_URL}/tools`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
+        // Add timeout for production
+        signal: AbortSignal.timeout(10000), // 10 second timeout
       });
 
       if (!response.ok) {
@@ -180,29 +197,42 @@ function LandingPage({ onNavigate }) {
     setIsLoading(true);
 
     try {
-      // Prepare chat history to send to backend (optional, but good for context)
-      // Filter out only content and type for sending to backend, as IDs/timestamps
-      // are frontend specific. You might need to adjust based on how your Python
-      // agent expects history.
+      // Prepare chat history to send to backend
       const historyToSend = messages.map((msg) => ({
         type: msg.type,
         content: msg.content,
       }));
 
-      const response = await fetch("http://localhost:5000/chat", {
-        // Flask server runs on port 5000
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 180000); // 3 minute timeout
+
+      const response = await fetch(`${BACKEND_URL}/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           message: userMessage.content,
-          history: historyToSend, // Sending history for context if agent uses it
+          history: historyToSend,
         }),
+        signal: controller.signal,
       });
 
+      clearTimeout(timeoutId);
+
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        // Handle different HTTP error codes
+        if (response.status === 503) {
+          throw new Error(
+            "Service is starting up. Please wait a moment and try again."
+          );
+        } else if (response.status >= 500) {
+          throw new Error("Server error. Please try again later.");
+        } else if (response.status === 404) {
+          throw new Error("Service not found. Please check the backend URL.");
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
       }
 
       const data = await response.json();
@@ -212,16 +242,7 @@ function LandingPage({ onNavigate }) {
 
       // Process tool_calls and tool_outputs if present
       if (data.tool_calls && data.tool_calls.length > 0) {
-        // Here, we're just collecting the tool names that were called
-        // You might want to display more detailed tool call info to the user
         toolsUsedByBot = data.tool_calls.map((tc) => tc.name);
-        // Optionally, you could prepend tool call info to the bot message
-        // For now, we'll just show them in the 'toolsUsed' section.
-      }
-      if (data.tool_outputs && data.tool_outputs.length > 0) {
-        // You might want to display tool outputs as separate messages or append to bot message
-        // For simplicity, we're not adding them as separate messages in this example
-        // but you could iterate and add them if needed.
       }
 
       // Format the AI response for better readability
@@ -238,12 +259,31 @@ function LandingPage({ onNavigate }) {
       setMessages((prev) => [...prev, botResponse]);
     } catch (error) {
       console.error("Error sending message to backend:", error);
+
+      let errorMessage = "⚠️ **Connection Error**\n\n";
+
+      if (error.name === "AbortError") {
+        errorMessage +=
+          "Request timed out. The server might be busy.\n• Try a simpler question\n• Wait a moment and try again\n• Check your internet connection";
+      } else if (error.message.includes("Service is starting up")) {
+        errorMessage +=
+          "The AI service is starting up.\n• Please wait 30-60 seconds\n• Try your request again\n• The service should be ready shortly";
+      } else if (
+        error.message.includes("Failed to fetch") ||
+        error.message.includes("NetworkError")
+      ) {
+        errorMessage +=
+          "Network connection issue.\n• Check your internet connection\n• The server might be temporarily unavailable\n• Try again in a few moments";
+      } else {
+        errorMessage += `Sorry, I couldn't process your request:\n• ${error.message}\n• Please try again in a moment`;
+      }
+
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now() + 1,
           type: "bot",
-          content: `⚠️ **Connection Error**\n\nSorry, I couldn't process your request:\n• ${error.message}\n• Please check your connection\n• Try again in a moment`,
+          content: errorMessage,
           timestamp: new Date().toLocaleTimeString(),
         },
       ]);
@@ -329,7 +369,7 @@ function LandingPage({ onNavigate }) {
           <div className="flex items-center gap-2">
             <Loader className="w-4 h-4 animate-spin text-purple-400" />
             <span className="text-xs text-purple-400">
-              Fetching tools from backend...
+              Connecting to backend...
             </span>
           </div>
         </div>
@@ -343,7 +383,7 @@ function LandingPage({ onNavigate }) {
           <div className="flex items-center gap-2 mb-2">
             <AlertCircle className="w-4 h-4 text-amber-400" />
             <span className="text-xs text-amber-400">
-              Failed to fetch tools from backend (using fallback)
+              Could not connect to backend (using fallback)
             </span>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -408,7 +448,7 @@ function LandingPage({ onNavigate }) {
             </div>
           </div>
           <div className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-medium">
-            Online
+            {window.location.hostname === "localhost" ? "Local" : "Online"}
           </div>
         </CardHeader>
 
@@ -550,6 +590,9 @@ function LandingPage({ onNavigate }) {
 
           <div className="mt-2 text-xs text-purple-400 text-center">
             Powered by Gemini LLM • Firecrawl Tools • Real-time Web Intelligence
+            {window.location.hostname !== "localhost" && (
+              <span className="ml-2">• Deployed on Render</span>
+            )}
           </div>
         </div>
       </Card>
