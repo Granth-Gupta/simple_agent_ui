@@ -11,6 +11,7 @@ import {
   Brain,
   Zap,
   AlertCircle,
+  ChevronDown, // Import ChevronDown icon
 } from "lucide-react";
 // Import Card components from shadcn/ui
 import {
@@ -21,6 +22,12 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+// Import Collapsible components
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 function LandingPage({ onNavigate }) {
   const [messages, setMessages] = useState([
@@ -37,6 +44,7 @@ function LandingPage({ onNavigate }) {
   const [availableTools, setAvailableTools] = useState([]);
   const [toolsLoading, setToolsLoading] = useState(true);
   const [toolsError, setToolsError] = useState(null);
+  const [isToolsCollapsibleOpen, setIsToolsCollapsibleOpen] = useState(false); // State for collapsible
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -360,71 +368,79 @@ function LandingPage({ onNavigate }) {
 
   // Render tools section with loading and error states
   const renderToolsSection = () => {
-    if (toolsLoading) {
-      return (
-        <div className="bg-black/20 backdrop-blur-lg border-b border-purple-500/10 p-3">
-          <p className="text-sm text-purple-300 mb-2">
-            Loading Available Tools...
-          </p>
-          <div className="flex items-center gap-2">
-            <Loader className="w-4 h-4 animate-spin text-purple-400" />
-            <span className="text-xs text-purple-400">
-              Connecting to backend...
-            </span>
-          </div>
-        </div>
-      );
-    }
-
-    if (toolsError) {
-      return (
-        <div className="bg-black/20 backdrop-blur-lg border-b border-purple-500/10 p-3">
-          <p className="text-sm text-purple-300 mb-2">Available Tools:</p>
-          <div className="flex items-center gap-2 mb-2">
-            <AlertCircle className="w-4 h-4 text-amber-400" />
-            <span className="text-xs text-amber-400">
-              Could not connect to backend (using fallback)
-            </span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {availableTools.map((tool, index) => (
-              <span
-                key={index}
-                className="px-2 py-1 bg-amber-500/20 text-amber-200 rounded text-xs font-mono flex items-center gap-1"
-              >
-                {getToolIcon(tool)}
-                {tool}
-              </span>
-            ))}
-          </div>
-        </div>
-      );
-    }
-
     return (
-      <div className="bg-black/20 backdrop-blur-lg border-b border-purple-500/10 p-3">
-        <div className="flex items-center gap-2 mb-2">
-          <p className="text-sm text-purple-300">Available Tools:</p>
-          <button
-            onClick={fetchAvailableTools}
-            className="text-xs text-purple-400 hover:text-purple-300 transition-colors"
-            title="Refresh tools"
-          >
-            🔄
-          </button>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {availableTools.map((tool, index) => (
-            <span
-              key={index}
-              className="px-2 py-1 bg-purple-500/20 text-purple-200 rounded text-xs font-mono flex items-center gap-1"
+      <Collapsible
+        open={isToolsCollapsibleOpen}
+        onOpenChange={setIsToolsCollapsibleOpen}
+        className="bg-black/20 backdrop-blur-lg border-b border-purple-500/10 p-3"
+      >
+        <CollapsibleTrigger asChild>
+          <div className="flex items-center justify-between cursor-pointer py-1">
+            <div className="flex items-center gap-2">
+              <p className="text-sm text-purple-300">Available Tools:</p>
+              {toolsLoading && (
+                <div className="flex items-center gap-2 ml-2">
+                  <Loader className="w-4 h-4 animate-spin text-purple-400" />
+                  <span className="text-xs text-purple-400">Connecting...</span>
+                </div>
+              )}
+              {toolsError && !toolsLoading && (
+                <div className="flex items-center gap-2 ml-2">
+                  <AlertCircle className="w-4 h-4 text-amber-400" />
+                  <span className="text-xs text-amber-400">
+                    Error (using fallback)
+                  </span>
+                </div>
+              )}
+            </div>
+            <ChevronDown
+              className={`w-5 h-5 text-purple-300 transition-transform duration-200 ${
+                isToolsCollapsibleOpen ? "rotate-180" : ""
+              }`}
+            />
+          </div>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <div className="pt-2">
+            {toolsLoading ? (
+              <p className="text-xs text-purple-400">
+                Loading tools from backend...
+              </p>
+            ) : toolsError ? (
+              <div className="flex flex-wrap gap-2">
+                {availableTools.map((tool, index) => (
+                  <span
+                    key={index}
+                    className="px-2 py-1 bg-amber-500/20 text-amber-200 rounded text-xs font-mono flex items-center gap-1"
+                  >
+                    {getToolIcon(tool)}
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                {availableTools.map((tool, index) => (
+                  <span
+                    key={index}
+                    className="px-2 py-1 bg-purple-500/20 text-purple-200 rounded text-xs font-mono flex items-center gap-1"
+                  >
+                    {getToolIcon(tool)}
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            )}
+            <button
+              onClick={fetchAvailableTools}
+              className="text-xs text-purple-400 hover:text-purple-300 transition-colors mt-2"
+              title="Refresh tools"
             >
-              {getToolIcon(tool)}
-              {tool}
-            </span>
-          ))}
-        </div>
-      </div>
+              🔄 Refresh Tools
+            </button>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
     );
   };
 
