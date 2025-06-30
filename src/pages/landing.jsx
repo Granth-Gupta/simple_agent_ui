@@ -429,9 +429,13 @@ function LandingPage({ onNavigate }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4 font-sans">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4 sm:p-6 md:p-8 font-sans">
+      {" "}
+      {/* Adjusted padding */}
       {/* Main Chat Container Card */}
-      <Card className="w-[80%] max-w-6xl h-[90vh] flex flex-col rounded-xl overflow-hidden bg-black/40 backdrop-blur-xl border border-purple-500/20 shadow-lg shadow-purple-900/50">
+      <Card className="w-full sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[60%] max-w-6xl h-[90vh] flex flex-col rounded-xl overflow-hidden bg-black/40 backdrop-blur-xl border border-purple-500/20 shadow-lg shadow-purple-900/50">
+        {" "}
+        {/* Adjusted width */}
         {/* Header - Now part of the main Card */}
         <CardHeader className="bg-black/30 border-b border-purple-500/20 p-4 flex flex-row items-center justify-between">
           <div className="flex items-center gap-3">
@@ -451,10 +455,8 @@ function LandingPage({ onNavigate }) {
             {window.location.hostname === "localhost" ? "Local" : "Online"}
           </div>
         </CardHeader>
-
         {/* Available Tools - Dynamic loading */}
         {renderToolsSection()}
-
         {/* Messages */}
         <CardContent className="flex-1 overflow-y-auto p-4 space-y-6">
           {messages.map((message) => (
@@ -551,7 +553,6 @@ function LandingPage({ onNavigate }) {
 
           <div ref={messagesEndRef} />
         </CardContent>
-
         {/* Input */}
         <div className="bg-black/30 backdrop-blur-xl border-t border-purple-500/20 p-4">
           <div className="flex gap-3">
